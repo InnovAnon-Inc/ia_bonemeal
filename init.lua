@@ -465,24 +465,24 @@ core.register_craftitem("bonemeal:mulch", {
 	description = S("Mulch"),
 	inventory_image = "bonemeal_mulch.png",
 
-	on_use = function(itemstack, user, pointed_thing)
-
-		-- use helper function to do checks and return position and node
-		local node = use_checks(user, pointed_thing)
-
-		if node then
-
-			-- call global on_use function with strength of 1
-			local used = bonemeal:on_use(pointed_thing.under, 1, node)
-
-			-- take item if not in creative
-			if used and not bonemeal.is_creative(user:get_player_name()) then
-				itemstack:take_item()
-			end
-		end
-
-		return itemstack
-	end
+--	on_use = function(itemstack, user, pointed_thing)
+--
+--		-- use helper function to do checks and return position and node
+--		local node = use_checks(user, pointed_thing)
+--
+--		if node then
+--
+--			-- call global on_use function with strength of 1
+--			local used = bonemeal:on_use(pointed_thing.under, 1, node)
+--
+--			-- take item if not in creative
+--			if used and not bonemeal.is_creative(user:get_player_name()) then
+--				itemstack:take_item()
+--			end
+--		end
+--
+--		return itemstack
+--	end
 })
 
 -- bonemeal (strength 2)
@@ -491,24 +491,24 @@ core.register_craftitem("bonemeal:bonemeal", {
 	description = S("Bone Meal"),
 	inventory_image = "bonemeal_item.png",
 
-	on_use = function(itemstack, user, pointed_thing)
-
-		-- use helper function to do checks and return position and node
-		local node = use_checks(user, pointed_thing)
-
-		if node then
-
-			-- call global on_use function with strength of 2
-			local used = bonemeal:on_use(pointed_thing.under, 2, node)
-
-			-- take item if not in creative
-			if used and not bonemeal.is_creative(user:get_player_name()) then
-				itemstack:take_item()
-			end
-		end
-
-		return itemstack
-	end
+--	on_use = function(itemstack, user, pointed_thing)
+--
+--		-- use helper function to do checks and return position and node
+--		local node = use_checks(user, pointed_thing)
+--
+--		if node then
+--
+--			-- call global on_use function with strength of 2
+--			local used = bonemeal:on_use(pointed_thing.under, 2, node)
+--
+--			-- take item if not in creative
+--			if used and not bonemeal.is_creative(user:get_player_name()) then
+--				itemstack:take_item()
+--			end
+--		end
+--
+--		return itemstack
+--	end
 })
 
 -- fertiliser (strength 3)
@@ -517,24 +517,24 @@ core.register_craftitem("bonemeal:fertiliser", {
 	description = S("Fertiliser"),
 	inventory_image = "bonemeal_fertiliser.png",
 
-	on_use = function(itemstack, user, pointed_thing)
-
-		-- use helper function to do checks and return position and node
-		local node = use_checks(user, pointed_thing)
-
-		if node then
-
-			-- call global on_use function with strength of 3
-			local used = bonemeal:on_use(pointed_thing.under, 3, node)
-
-			-- take item if not in creative
-			if used and not bonemeal.is_creative(user:get_player_name()) then
-				itemstack:take_item()
-			end
-		end
-
-		return itemstack
-	end
+--	on_use = function(itemstack, user, pointed_thing)
+--
+--		-- use helper function to do checks and return position and node
+--		local node = use_checks(user, pointed_thing)
+--
+--		if node then
+--
+--			-- call global on_use function with strength of 3
+--			local used = bonemeal:on_use(pointed_thing.under, 3, node)
+--
+--			-- take item if not in creative
+--			if used and not bonemeal.is_creative(user:get_player_name()) then
+--				itemstack:take_item()
+--			end
+--		end
+--
+--		return itemstack
+--	end
 })
 
 -- bone
@@ -552,11 +552,18 @@ core.register_craftitem("bonemeal:gelatin_powder", {
 	inventory_image = "bonemeal_gelatin_powder.png",
 	groups = {food_gelatin = 1, flammable = 2}
 })
+--if minetest.get_modpath("hunger_ng") then
+--    hunger_ng.add_hunger_data('bonemeal:gelatin_powder', {
+--	--heals    = 1,
+--        satiates = 1,
+--    })
+--end
 
 --= Recipes
 
 -- gelatin powder
 
+if not minetest.get_modpath("technic") then
 core.register_craft({
 	output = "bonemeal:gelatin_powder 4",
 	recipe = {
@@ -568,15 +575,36 @@ core.register_craft({
 		{a.bucket_water, a.bucket_empty .. " 5"}
 	}
 })
+else
+    technic.register_extractor_recipe({
+        input  = {"bonemeal:bonemeal 2"},
+	output = "bonemeal:gelatin_powder",
+    })
+end
 
 -- bonemeal (from bone)
 
+if not minetest.get_modpath("technic") then
 core.register_craft({
 	type = "cooking",
 	output = "bonemeal:bonemeal 2",
 	recipe = "group:bone",
 	cooktime = 4
 })
+else
+--    technic.register_grinder_recipe({
+--        input  = {"group:bone"}, -- FIXME doesn't support groups ?
+--	output = "bonemeal:bonemeal 2",
+--    })
+--    technic.register_grinder_recipe({
+--        input  = {"bones:bones"},
+--	output = "bonemeal:bonemeal 4",
+--    })
+    technic.register_grinder_recipe({
+        input  = {"bonemeal:bone"},
+	output = "bonemeal:bonemeal 2",
+    })
+end
 
 -- bonemeal (from player bones)
 
@@ -590,10 +618,17 @@ end
 
 -- bonemeal (from coral skeleton)
 
+if not minetest.get_modpath("technic") then
 core.register_craft({
 	output = "bonemeal:bonemeal 2",
 	recipe = {{a.coral}}
 })
+else
+    technic.register_grinder_recipe({
+        input  = {a.coral},
+	output = "bonemeal:bonemeal 2",
+    })
+end
 
 -- mulch
 
@@ -624,23 +659,23 @@ core.register_craft({
 
 -- add bones to dirt
 
-if core.registered_items[a.dirt] then
-
-	core.override_item(a.dirt, {
-		drop = {
-			max_items = 1,
-			items = {
-				{
-					items = {"bonemeal:bone"},
-					rarity = 40
-				},
-				{
-					items = {a.dirt}
-				}
-			}
-		}
-	})
-end
+--if core.registered_items[a.dirt] then
+--
+--	core.override_item(a.dirt, {
+--		drop = {
+--			max_items = 1,
+--			items = {
+--				{
+--					items = {"bonemeal:bone"},
+--					rarity = 40
+--				},
+--				{
+--					items = {a.dirt}
+--				}
+--			}
+--		}
+--	})
+--end
 
 -- add support for mods
 
