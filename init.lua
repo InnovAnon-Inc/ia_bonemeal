@@ -14,6 +14,7 @@ bonemeal = {
 		coral = mcl and "mcl_ocean:dead_horn_coral_block" or "default:coral_skeleton"
 	}
 }
+bonemeal.mod = 'ia'
 
 -- translation support and vars
 
