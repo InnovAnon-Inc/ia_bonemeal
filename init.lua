@@ -484,6 +484,11 @@ core.register_craftitem("bonemeal:mulch", {
 --
 --		return itemstack
 --	end
+        --_compost        = { -- TODO
+        --  amount = amount,
+        --  C      = C,
+        --  N      = N,
+        --},
 })
 
 -- bonemeal (strength 2)
@@ -510,6 +515,11 @@ core.register_craftitem("bonemeal:bonemeal", {
 --
 --		return itemstack
 --	end
+        --_compost        = { -- TODO
+        --  amount = amount,
+        --  C      = C,
+        --  N      = N,
+        --},
 })
 
 -- fertiliser (strength 3)
@@ -536,6 +546,11 @@ core.register_craftitem("bonemeal:fertiliser", {
 --
 --		return itemstack
 --	end
+        --_compost        = { -- TODO
+        --  amount = amount,
+        --  C      = C,
+        --  N      = N,
+        --},
 })
 
 -- bone
@@ -543,7 +558,12 @@ core.register_craftitem("bonemeal:fertiliser", {
 core.register_craftitem("bonemeal:bone", {
 	description = S("Bone"),
 	inventory_image = "bonemeal_bone.png",
-	groups = {bone = 1}
+	groups = {bone = 1},
+        --_compost        = { -- TODO
+        --  amount = amount,
+        --  C      = C,
+        --  N      = N,
+        --},
 })
 
 -- gelatin powder
@@ -551,7 +571,12 @@ core.register_craftitem("bonemeal:bone", {
 core.register_craftitem("bonemeal:gelatin_powder", {
 	description = S("Gelatin Powder"),
 	inventory_image = "bonemeal_gelatin_powder.png",
-	groups = {food_gelatin = 1, flammable = 2}
+	groups = {food_gelatin = 1, flammable = 2},
+        --_compost        = { -- TODO
+        --  amount = amount,
+        --  C      = C,
+        --  N      = N,
+        --},
 })
 --if minetest.get_modpath("hunger_ng") then
 --    hunger_ng.add_hunger_data('bonemeal:gelatin_powder', {
